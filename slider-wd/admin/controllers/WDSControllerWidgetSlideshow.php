@@ -44,8 +44,8 @@ class WDSControllerWidgetSlideshow extends WP_Widget {
 
 	// Update Settings.
   public function update($new_instance, $old_instance) {
-    $instance['title'] = strip_tags($new_instance['title']);
-    $instance['id'] = $new_instance['id'];
+    $instance['title'] = esc_html(strip_tags($new_instance['title']));
+    $instance['id'] = intval($new_instance['id']);
     return $instance;
   }
 

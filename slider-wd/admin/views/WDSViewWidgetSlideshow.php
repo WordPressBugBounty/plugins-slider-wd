@@ -56,7 +56,7 @@ class WDSViewWidgetSlideshow {
     ?>
     <p>
       <label for="<?php echo $id_title; ?>"><?php _e('Title:', WDS()->prefix);?></label>
-      <input class="widefat" id="<?php echo $id_title; ?>" name="<?php echo $name_title; ?>" type="text" value="<?php echo $instance['title']; ?>" />
+      <input class="widefat" id="<?php echo $id_title; ?>" name="<?php echo esc_attr($name_title); ?>" type="text" value="<?php echo esc_attr($instance['title']); ?>" />
     </p>    
     <p>
       <select name="<?php echo $name_gallery_id; ?>" id="<?php echo $id_gallery_id; ?>" class="widefat">
