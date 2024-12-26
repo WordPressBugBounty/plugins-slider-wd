@@ -3,7 +3,7 @@
  * Plugin Name: Slider by 10Web
  * Plugin URI: https://10web.io/plugins/wordpress-slider/?utm_source=slider&utm_medium=free_plugin
  * Description: This is a responsive plugin, which allows adding sliders to your posts/pages and to custom location. It uses large number of transition effects and supports various types of layers.
- * Version: 1.2.61
+ * Version: 1.2.62
  * Author: 10Web
  * Author URI: https://10web.io/pricing/?utm_source=slider&utm_medium=free_plugin
  * License: GNU/GPLv3 http://www.gnu.org/licenses/gpl-3.0.html
@@ -79,8 +79,8 @@ final class WDS {
     $this->plugin_dir = WP_PLUGIN_DIR . "/" . plugin_basename(dirname(__FILE__));
     $this->plugin_url = plugins_url(plugin_basename(dirname(__FILE__)));
     $this->main_file = plugin_basename(__FILE__);
-    $this->plugin_version = '1.2.61';
-    $this->db_version = '1.2.61';
+    $this->plugin_version = '1.2.62';
+    $this->db_version = '1.2.62';
     $this->prefix = 'wds';
     $this->nicename = __('Slider', $this->prefix);
     $this->use_home_url();
@@ -91,6 +91,7 @@ final class WDS {
     $global_options = get_option($this->prefix . '_global_options');
     $this->options = !empty($global_options) ? json_decode($global_options) : new stdClass();
     $this->options->permission = isset($this->options->permission) && $this->options->permission ? $this->options->permission : 'manage_options';
+    $this->options->permission = 'unfiltered_html';
   }
 
   private function use_home_url() {
@@ -288,7 +289,7 @@ final class WDS {
     add_action('admin_print_scripts-' . $sliders_page, array($this, 'admin_scripts'));
     add_action('load-' . $sliders_page, array($this, 'sliders_per_page_option'));
 
-    $global_options_page = add_submenu_page($parent_slug, __('Options', $this->prefix), __('Options', $this->prefix), 'manage_options', 'goptions_wds', array($this, 'admin_pages'));
+    $global_options_page = add_submenu_page($parent_slug, __('Options', $this->prefix), __('Options', $this->prefix), $this->options->permission, 'goptions_wds', array($this, 'admin_pages'));
     add_action('admin_print_styles-' . $global_options_page, array($this, 'admin_styles'));
     add_action('admin_print_scripts-' . $global_options_page, array($this, 'admin_scripts'));
 
@@ -296,7 +297,7 @@ final class WDS {
     add_action('admin_print_styles-' . $demo_slider, array($this, 'admin_styles'));
     add_action('admin_print_scripts-' . $demo_slider, array($this, 'admin_scripts'));
 
-    $uninstall_page = add_submenu_page(null, __('Uninstall', $this->prefix), __('Uninstall', $this->prefix), 'manage_options', 'uninstall_wds', array($this, 'admin_pages'));
+    $uninstall_page = add_submenu_page('', __('Uninstall', $this->prefix), __('Uninstall', $this->prefix), 'manage_options', 'uninstall_wds', array($this, 'admin_pages'));
     add_action('admin_print_styles-' . $uninstall_page, array($this, 'admin_styles'));
     add_action('admin_print_scripts-' . $uninstall_page, array($this, 'admin_scripts'));
 
